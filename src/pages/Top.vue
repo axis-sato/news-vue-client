@@ -13,6 +13,7 @@
             <div class="title">{{ article.title }}</div>
             <!--Image-->
             <img :src="article.thumbnail" alt="Thumbnail">
+            <!--PublishedAt-->
             <div class="published_at">{{ article.published_at }}</div>
             <!--Body-->
             <!--<div class="body">{{ article.body }}</div>-->
@@ -42,6 +43,8 @@
 </template>
 
 <script>
+  import moment from 'moment'
+
   export default {
     name: 'top',
     data () {
@@ -64,7 +67,10 @@
           .then(response => response.json())
           .then((json) => {
             console.log(json)
-            const articles = json.articles
+            const articles = json.articles.map((article) => {
+              article.published_at = moment(article.published_at).format('YYYY/M/D a h:mm:ss')
+              return article
+            })
             if (articles.length > 0) {
               this.articles = this.articles.concat(articles)
             }
@@ -106,6 +112,9 @@
   .title {
     padding: 10px;
     font-size: 20px;
+  }
+  .published_at {
+    color: lightslategray;
   }
   .body {
     padding: 10px;
