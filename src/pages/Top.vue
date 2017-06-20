@@ -12,7 +12,7 @@
             <!--Title-->
             <div class="title">{{ article.title }}</div>
             <!--Image-->
-            <img :src="article.thumbnail" alt="Thumbnail">
+            <img :src="article.thumbnail" class="thumbnail" alt="Thumbnail">
             <!--PublishedAt-->
             <div class="published_at">{{ article.published_at }}</div>
             <!--Body-->
@@ -69,6 +69,7 @@
             console.log(json)
             const articles = json.articles.map((article) => {
               article.published_at = moment(article.published_at).format('YYYY/M/D a h:mm:ss')
+              article.thumbnail = article.thumbnail ? article.thumbnail : '/static/img/noimage.png'
               return article
             })
             if (articles.length > 0) {
@@ -110,6 +111,9 @@
     margin-bottom: 16px;
     color: black !important;
     text-decoration: none !important;
+  }
+  .thumbnail {
+    width: 100%;
   }
   .title {
     padding: 10px;
