@@ -8,7 +8,7 @@
     <div class="main-content">
       <md-layout md-gutter="16">
         <md-layout md-gutter v-for="article in articles" :key="article.id" class="foo" md-flex md-flex-xsmall="100" md-flex-small="50" md-flex-medium="33" md-flex-large="33">
-          <md-whiteframe  md-elevation="2" class="article-whiteframe">
+          <md-whiteframe md-tag="a" :href="article.url" target="_blank"  md-elevation="2" class="article-whiteframe">
             <!--Title-->
             <div class="title">{{ article.title }}</div>
             <!--Image-->
@@ -108,6 +108,8 @@
   .article-whiteframe {
     width: 100%;
     margin-bottom: 16px;
+    color: black !important;
+    text-decoration: none !important;
   }
   .title {
     padding: 10px;
