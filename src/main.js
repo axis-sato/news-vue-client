@@ -4,7 +4,15 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 
+// VueMaterial
+import VueMaterial from 'vue-material'
+import 'vue-material/dist/vue-material.css'
+
+import 'whatwg-fetch'
+
 Vue.config.productionTip = false
+
+Vue.use(VueMaterial)
 
 /* eslint-disable no-new */
 new Vue({
