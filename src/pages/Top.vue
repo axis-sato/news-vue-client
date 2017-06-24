@@ -8,9 +8,9 @@
       </router-link>
     </div>
     <div class="main-content">
-      <!--<div>-->
-        <!--<md-spinner md-indeterminate style="margin: auto"></md-spinner>-->
-      <!--</div>-->
+      <div class="spinner_wrapper" v-if="loading.article">
+        <md-spinner md-indeterminate style="margin: auto"></md-spinner>
+      </div>
       <md-layout md-gutter="16">
         <md-layout md-gutter v-for="article in articles" :key="article.id" class="foo" md-flex md-flex-xsmall="100" md-flex-small="50" md-flex-medium="33" md-flex-large="33">
           <md-whiteframe md-tag="a" :href="article.url" target="_blank"  md-elevation="2" class="article-whiteframe">
@@ -181,5 +181,10 @@
   .more-button {
     display: block;
     margin: 10px auto ;
+  }
+
+  .spinner_wrapper {
+    text-align: center;
+    padding: 20px 0;
   }
 </style>
