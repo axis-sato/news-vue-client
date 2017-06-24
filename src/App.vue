@@ -2,7 +2,7 @@
   <div id="app">
     <md-toolbar>
       <h1 class="md-title">
-        <router-link to="/" class="title">
+        <router-link to="/" class="title" style="color: white; text-decoration: none">
           News
         </router-link>
       </h1>
@@ -19,10 +19,6 @@ export default {
 </script>
 
 <style>
-  .title {
-    color: white !important;
-    text-decoration: none !important;
-  }
 /*#app {*/
   /*font-family: 'Avenir', Helvetica, Arial, sans-serif;*/
   /*-webkit-font-smoothing: antialiased;*/
