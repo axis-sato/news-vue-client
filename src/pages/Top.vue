@@ -1,11 +1,16 @@
 <template>
   <div>
     <div class="side-menu">
-      <md-chip class="tag-chip" v-for="tag in tags" :key="tag.id">
-        {{ tag.name }}
-      </md-chip>
+      <router-link :to="{ name: 'tag_articles', params: { tagName: tag.name }}" v-for="tag in tags" :key="tag.id">
+        <md-chip class="tag-chip" v-bind:class="{ 'md-primary': $route.params.tagName === tag.name }">
+          {{ tag.name }}
+        </md-chip>
+      </router-link>
     </div>
     <div class="main-content">
+      <!--<div>-->
+        <!--<md-spinner md-indeterminate style="margin: auto"></md-spinner>-->
+      <!--</div>-->
       <md-layout md-gutter="16">
         <md-layout md-gutter v-for="article in articles" :key="article.id" class="foo" md-flex md-flex-xsmall="100" md-flex-small="50" md-flex-medium="33" md-flex-large="33">
           <md-whiteframe md-tag="a" :href="article.url" target="_blank"  md-elevation="2" class="article-whiteframe">
@@ -53,20 +58,50 @@
         tags: [],
         limit: 5,
         offset: 0,
-        isNext: false
+        isNext: false,
+        loading: {
+          article: false,
+          tag: false
+        }
       }
     },
     created () {
       this.fetchArticles()
       this.fetchTags()
+      console.log(this.$route.params.tagName)
+    },
+    watch: {
+      '$route': function () {
+        console.log(this.$route.params.tagName)
+        this.refreshData()
+        this.fetchArticles(this.$route.params.tagName)
+      }
     },
     methods: {
-      fetchArticles () {
-        console.log('fetch articles')
-        fetch(`http://localhost:3000/v1/articles?limit=${this.limit}&offset=${this.offset}`)
+      refreshData () {
+        this.articles = []
+        this.limit = 5
+        this.offset = 0
+        this.isNext = false
+        this.loading = {
+          article: false,
+          tag: false
+        }
+      },
+      fetchArticles (tagName = undefined) {
+        console.log('fetchArticles')
+        this.loading.article = true
+
+        let baseUrl = 'http://localhost:3000/v1/articles'
+        if (tagName !== undefined) {
+          baseUrl += `/tag/${tagName}`
+        }
+
+        fetch(`${baseUrl}?limit=${this.limit}&offset=${this.offset}`)
           .then(response => response.json())
           .then((json) => {
-            console.log(json)
+            this.loading.article = false
+//            console.log(json)
             const articles = json.articles.map((article) => {
               article.published_at = moment(article.published_at).format('YYYY/M/D a h:mm:ss')
               article.thumbnail = article.thumbnail ? article.thumbnail : '/static/img/noimage.png'
@@ -81,11 +116,12 @@
           })
       },
       fetchTags () {
-        console.log('fetch tags')
+        this.loading.tag = true
         fetch(`http://localhost:3000/v1/tags`)
           .then(response => response.json())
           .then((json) => {
-            console.log(json)
+            this.loading.tag = false
+//            console.log(json)
             this.tags = json.tags
           })
       },
@@ -136,6 +172,11 @@
   .tag-chip {
     margin-left: 5px;
     margin-top: 5px;
+    color: black;
+  }
+  .md-theme-default.md-chip.md-primary {
+    color: rgba(255, 255, 255, .87);
+    background-color: #2196f3;
   }
   .more-button {
     display: block;

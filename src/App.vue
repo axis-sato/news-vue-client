@@ -1,7 +1,11 @@
 <template>
   <div id="app">
     <md-toolbar>
-      <h1 class="md-title">News</h1>
+      <h1 class="md-title">
+        <router-link to="/" class="title">
+          News
+        </router-link>
+      </h1>
     </md-toolbar>
     <!--<img src="./assets/logo.png">-->
     <router-view></router-view>
@@ -15,6 +19,10 @@ export default {
 </script>
 
 <style>
+  .title {
+    color: white !important;
+    text-decoration: none !important;
+  }
 /*#app {*/
   /*font-family: 'Avenir', Helvetica, Arial, sans-serif;*/
   /*-webkit-font-smoothing: antialiased;*/
