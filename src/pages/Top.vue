@@ -88,9 +88,10 @@
           tag: false
         }
       },
-      fetchArticles (tagName = undefined) {
+      fetchArticles (tagName = undefined, loading = true) {
         console.log('fetchArticles')
-        this.loading.article = true
+
+        this.loading.article = (true && loading)
 
         let baseUrl = 'http://localhost:3000/v1/articles'
         if (tagName !== undefined) {
@@ -127,7 +128,7 @@
       },
       more () {
         console.log('more')
-        this.fetchArticles()
+        this.fetchArticles(this.$route.params.tagName, false)
       }
     }
   }
