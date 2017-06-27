@@ -2,9 +2,7 @@
   <div>
     <tags :tags="tags"></tags>
     <div class="main-content">
-      <div class="spinner_wrapper" v-if="loading.article">
-        <md-spinner md-indeterminate style="margin: auto"></md-spinner>
-      </div>
+      <loading :is-show="loading.article"></loading>
       <md-layout md-gutter="16">
         <md-layout md-gutter v-for="article in articles" :key="article.id" class="foo" md-flex md-flex-xsmall="100" md-flex-small="50" md-flex-medium="33" md-flex-large="33">
           <md-whiteframe md-elevation="2" class="article_whiteframe">
@@ -46,6 +44,7 @@
 <script>
   import moment from 'moment'
   import Tags from '../components/Tags'
+  import Loading from '../components/Loading'
 
   export default {
     name: 'top',
@@ -63,7 +62,7 @@
       }
     },
     components: {
-      Tags
+      Tags, Loading
     },
     created () {
       this.fetchArticles()

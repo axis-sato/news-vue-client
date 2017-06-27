@@ -11,6 +11,6 @@
 <script>
   export default {
     name: 'tags',
-    props: ['tags'],
+    props: ['tags']
   }
 </script>
