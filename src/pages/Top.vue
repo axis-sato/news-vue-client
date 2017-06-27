@@ -1,12 +1,6 @@
 <template>
   <div>
-    <div class="side_menu">
-      <router-link :to="{ name: 'tag_articles', params: { tagName: tag.name }}" v-for="tag in tags" :key="tag.id">
-        <md-chip class="tag-chip" v-bind:class="{ 'md-primary': $route.params.tagName === tag.name }">
-          {{ tag.name }}
-        </md-chip>
-      </router-link>
-    </div>
+    <tags :tags="tags"></tags>
     <div class="main-content">
       <div class="spinner_wrapper" v-if="loading.article">
         <md-spinner md-indeterminate style="margin: auto"></md-spinner>
@@ -51,6 +45,7 @@
 
 <script>
   import moment from 'moment'
+  import Tags from '../components/Tags'
 
   export default {
     name: 'top',
@@ -66,6 +61,9 @@
           tag: false
         }
       }
+    },
+    components: {
+      Tags
     },
     created () {
       this.fetchArticles()
